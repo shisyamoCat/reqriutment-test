@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pref, ConnectApi } from './components/index';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import { Header, Main } from './components/index';
 import './css/App.css';
 
 const App = () => {
@@ -10,41 +8,16 @@ const App = () => {
     const [years, setYears] = useState([]);                 // 年度を格納する配列
     const [series, setSeries] = useState([]);               // 都道府県のチェック状態を格納する配列
 
-    // チャートの設定
-    const options = {
-        chart: {
-            type: 'line',
-        },
-        title: {
-            text: '',
-        },
-        xAxis: {
-            title: {
-                text: '年度',
-            },
-        },
-        yAxis: {
-            title: {
-                text: '人口数',
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-        },
-        plotOptions: {
-            series: {
-                pointInterval: 5,
-                pointStart: years[0],
-            }
-        },
-        accessibility: {
-            enabled: false
-        },
-        series: series
-    }
 
+    // APIから取ってきたデータをJSONで吐き出す関数
+    const ConnectApi = (url) => {
+        const apiKey = process.env.REACT_APP_API_KEY;           // RESAS-API APIキー
+
+        return (
+            fetch(url, { headers: {"X-API-KEY": apiKey} })
+            .then(res => res.json())
+        )
+    }
 
     // 都道府県のボタンがクリックされたらグラフ表示/非表示を切り替える関数
     const changeButtonState = (prefId) => {
@@ -87,7 +60,7 @@ const App = () => {
                 // series配列の最後にprefDataを追加
                 series.push(prefData)
 
-                // 更新したチェック状況をseriesにセット
+                // 更新したチェック県名をseriesにセット
                 setSeries(series)
 
                 // 更新した年度配列をyearsにセット
@@ -110,7 +83,7 @@ const App = () => {
                 }
             }
 
-            // 更新したチェック状況をseriesにセット
+            // 更新したチェック県名をseriesにセット
             setSeries(_series)
         }
 
@@ -137,31 +110,13 @@ const App = () => {
 
     return (
         <div className="wrapper">
-            <header className="header">
-                <h1 className="h1">都道府県別 人口構成グラフ</h1>
-            </header>
-
-            <main className='container'>
-                <h2>都道府県</h2>
-
-                {/* 都道府県別チェックボックス */}
-                <div className="pref-grid">
-                    {pref.map((value,index) =>
-                        <Pref
-                            prefName={value.prefName}
-                            prefId={index}
-                            key={index.toString()}
-                            onClick={changeButtonState}
-                        />
-                    )}
-                </div>
-
-                <h2>人口構成グラフ</h2>
-                <HighchartsReact
-                    highcharts={Highcharts}
-                    options={options}
-                />
-            </main>
+            <Header/>
+            <Main
+                pref={pref}
+                series={series}
+                years={years}
+                onClick={changeButtonState}
+            />
         </div>
     );
 }
