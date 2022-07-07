@@ -1,9 +1,15 @@
+body {
+    margin: 0;
+}
+
 .header {
     height: auto;
     background-color: #99cccc;
     .h1 {
         width: fit-content;
         margin: 0 auto;
+        color: #fff;
+        text-shadow: 2px 2px 2px #444;
     }
 }
 
@@ -17,6 +23,7 @@ h2 {
     padding-left: 1rem;
     border-left: 5px solid #444;
     border-bottom: 1px solid #444;
+    color: #444;
 }
 
 .pref-grid {
@@ -37,6 +44,11 @@ h2 {
     border-radius: 20px;
     white-space: nowrap;
     text-align: center;
+    transition: .3s all;
+    &:hover {
+        background-color: #99ccee;
+        color: #fff;
+    }
 }
 
 .input-pref {

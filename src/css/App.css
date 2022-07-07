@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 .header {
   height: auto;
   background-color: #99cccc;
@@ -8,6 +12,8 @@
   width: -moz-fit-content;
   width: fit-content;
   margin: 0 auto;
+  color: #fff;
+  text-shadow: 2px 2px 2px #444;
 }
 
 .container {
@@ -20,6 +26,7 @@ h2 {
   padding-left: 1rem;
   border-left: 5px solid #444;
   border-bottom: 1px solid #444;
+  color: #444;
 }
 
 .pref-grid {
@@ -44,6 +51,13 @@ h2 {
   border-radius: 20px;
   white-space: nowrap;
   text-align: center;
+  -webkit-transition: .3s all;
+  transition: .3s all;
+}
+
+.btn-pref:hover {
+  background-color: #99ccee;
+  color: #fff;
 }
 
 .input-pref {
