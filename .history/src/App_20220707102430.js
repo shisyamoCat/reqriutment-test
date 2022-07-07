@@ -1,0 +1,67 @@
+import React from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import './css/App.css';
+import './charts.js';
+import { Header, Main } from './components/index';
+
+export default class App extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            pref: [],
+            btnState: Array(47),
+            years: [],
+            populations: [],
+        };
+        this.apiKey = process.env.REACT_APP_API_KEY;
+        this.changeButtonState = this.changeButtonState.bind(this);
+    }
+
+    // 都道府県のボタンがクリックされたらグラフ表示/非表示を切り替える関数
+    changeButtonState(prefId) {
+        // ボタンチェック管理配列をコピー
+        const _btnState =  this.state.btnState.slice();
+
+        // 総人口のURL
+        const url = `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=${prefId + 1}`;
+
+        // チャックされた都道府県の配列の真偽値を反転
+        _btnState[prefId] = !_btnState[prefId];
+
+        if(_btnState){
+            fetch(url, { headers: {"X-API-KEY": this.apiKey} })
+            .then(res => res.json())
+            .then(data => {
+                let temp = [];
+                Object.keys(data.result.data[0]).forEach(e => {
+                    temp.push(data.result.data[0].value)
+                });
+                console.log(data.result.data[0].year);
+
+            });
+        }
+        // else{}
+    }
+
+    // レンダリング時に都道府県一覧を取得
+    componentDidMount() {
+        // RESAS-API 都道府県一覧アドレス
+        const url = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
+        // API-KEYを設定
+
+        fetch(url, { headers: { "X-API-KEY": this.apiKey } })
+        .then(response => response.json())
+        .then(data => {
+            this.setState({pref: data.result})
+        });
+    };
+
+    render(){
+        return (
+            <div className="wrapper">
+                <Main/>
+            </div>
+        );
+    }
+}

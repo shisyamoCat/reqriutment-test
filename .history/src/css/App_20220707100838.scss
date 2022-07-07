@@ -1,0 +1,47 @@
+.header {
+    height: auto;
+    background-color: #99cccc;
+    .h1 {
+        width: fit-content;
+        margin: 0 auto;
+    }
+}
+
+.container {
+    width: 60%;
+    margin: 0 auto;
+}
+
+h2 {
+    padding: 1rem;
+    border-left: 5px solid #444;
+    border-bottom: 1px solid #444;
+}
+
+.pref-grid {
+    width: 100%;
+    margin: 20px auto;
+    padding-left: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+.btn-pref {
+    width: 100px;
+    height: fit-content;
+    padding: .2rem .7rem;
+    border: 1px solid #99ccee;
+    border-radius: 20px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.input-pref {
+    display: none;
+    &:checked~.btn-pref {
+        background-color: #99ccee;
+        color: #fff;
+    }
+}

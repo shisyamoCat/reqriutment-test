@@ -1,0 +1,23 @@
+.header {
+    height: auto;
+    background-color: #99cccc;
+    .h1 {
+        width: fit-content;
+        margin: 0 auto;
+    }
+}
+
+.pref-grid {
+    width: 50%;
+    margin: 0 auto;
+    background-color: bisque;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.btn-pref {
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem;
+    white-space: nowrap;
+}
