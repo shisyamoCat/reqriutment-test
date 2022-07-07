@@ -8,11 +8,13 @@ export default class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            pref: [],
-            btnState: Array(47),
-            years: [],
-            series: [],
+            pref: [],               // 都道府県情報を格納する配列
+            btnState: Array(47),    // チャックボタンの状態を格納する配列
+            years: [],              // グラフのX軸の目盛り
+            series: [],             // 各都道府県のチェック状態を管理する配列
         };
+
+        // RESAS-API APIキー
         this.apiKey = process.env.REACT_APP_API_KEY;
         this.changeButtonState = this.changeButtonState.bind(this);
     }
@@ -29,7 +31,7 @@ export default class App extends React.Component {
         _btnState[prefId] = !_btnState[prefId];
 
         // チェックされた時の処理
-        if(this.state.btnState){
+        if(!this.state.btnState[prefId]){
             fetch(url, { headers: {"X-API-KEY": this.apiKey} })
             .then(res => res.json())
             .then(data => {
@@ -57,6 +59,11 @@ export default class App extends React.Component {
         // チェックが外れた時の処理
         else{
             const _series = this.state.series.slice();
+            for(let i in _series){
+                if(_series[i].name === this.state.pref[prefId].prefName){
+                    _series.splice(i,1)
+                }
+            }
             this.setState({
                 btnState: _btnState,
                 series: _series,
