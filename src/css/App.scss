@@ -2,6 +2,14 @@ body {
     margin: 0;
 }
 
+h2 {
+    margin-top: 40px;
+    padding-left: 1rem;
+    border-left: 5px solid #444;
+    border-bottom: 1px solid #444;
+    color: #444;
+}
+
 .header {
     height: auto;
     background-color: #99cccc;
@@ -16,45 +24,55 @@ body {
 .container {
     width: 70%;
     margin: 0 auto;
-}
-
-h2 {
-    margin-top: 40px;
-    padding-left: 1rem;
-    border-left: 5px solid #444;
-    border-bottom: 1px solid #444;
-    color: #444;
-}
-
-.pref-grid {
-    width: 100%;
-    margin: 20px auto;
-    padding-left: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-}
-
-.btn-pref {
-    width: 100px;
-    height: fit-content;
-    padding: .2rem .7rem;
-    border: 1px solid #99ccee;
-    border-radius: 20px;
-    white-space: nowrap;
-    text-align: center;
-    transition: .3s all;
-    &:hover {
-        background-color: #99ccee;
-        color: #fff;
+    .pref-grid {
+        width: calc(100% - 40px);
+        margin: 20px auto;
+        padding-left: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        .btn-pref {
+            width: 100px;
+            height: fit-content;
+            padding: .2rem .7rem;
+            border: 1px solid #99ccee;
+            border-radius: 20px;
+            white-space: nowrap;
+            text-align: center;
+            transition: .3s all;
+            &:hover {
+                background-color: #99ccee;
+                color: #fff;
+            }
+        }
+    }
+    .input-pref {
+        display: none;
+        &:checked~.btn-pref {
+            background-color: #99ccee;
+            color: #fff;
+        }
     }
 }
 
-.input-pref {
-    display: none;
-    &:checked~.btn-pref {
-        background-color: #99ccee;
-        color: #fff;
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 2.5vw;
+    }
+    h1 {
+        font-size: 5vw;
+    }
+    h2 {
+        font-size: 3.75vw;
+    }
+    .container {
+        width: 90%;
+        .pref-grid {
+            grid-template-columns: repeat(auto-fit, minmax(15vw, 1fr));
+            .btn-pref {
+                width: 10vw;
+            }
+        }
     }
 }

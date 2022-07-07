@@ -2,6 +2,14 @@ body {
   margin: 0;
 }
 
+h2 {
+  margin-top: 40px;
+  padding-left: 1rem;
+  border-left: 5px solid #444;
+  border-bottom: 1px solid #444;
+  color: #444;
+}
+
 .header {
   height: auto;
   background-color: #99cccc;
@@ -21,16 +29,8 @@ body {
   margin: 0 auto;
 }
 
-h2 {
-  margin-top: 40px;
-  padding-left: 1rem;
-  border-left: 5px solid #444;
-  border-bottom: 1px solid #444;
-  color: #444;
-}
-
-.pref-grid {
-  width: 100%;
+.container .pref-grid {
+  width: calc(100% - 40px);
   margin: 20px auto;
   padding-left: 20px;
   display: -ms-grid;
@@ -41,7 +41,7 @@ h2 {
   grid-row-gap: 20px;
 }
 
-.btn-pref {
+.container .pref-grid .btn-pref {
   width: 100px;
   height: -webkit-fit-content;
   height: -moz-fit-content;
@@ -55,17 +55,39 @@ h2 {
   transition: .3s all;
 }
 
-.btn-pref:hover {
+.container .pref-grid .btn-pref:hover {
   background-color: #99ccee;
   color: #fff;
 }
 
-.input-pref {
+.container .input-pref {
   display: none;
 }
 
-.input-pref:checked ~ .btn-pref {
+.container .input-pref:checked ~ .btn-pref {
   background-color: #99ccee;
   color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+  body {
+    font-size: 2.5vw;
+  }
+  h1 {
+    font-size: 5vw;
+  }
+  h2 {
+    font-size: 3.75vw;
+  }
+  .container {
+    width: 90%;
+  }
+  .container .pref-grid {
+    -ms-grid-columns: (minmax(15vw, 1fr))[auto-fit];
+        grid-template-columns: repeat(auto-fit, minmax(15vw, 1fr));
+  }
+  .container .pref-grid .btn-pref {
+    width: 10vw;
+  }
 }
 /*# sourceMappingURL=App.css.map */
