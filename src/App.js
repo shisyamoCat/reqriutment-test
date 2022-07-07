@@ -20,7 +20,7 @@ const App = () => {
     }
 
     // 都道府県のボタンがクリックされたらグラフ表示/非表示を切り替える関数
-    const changeButtonState = (prefId) => {
+    const changeButtonState = async (prefId) => {
         // RESAS-API 総人口URL
         const url = `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=${prefId + 1}`;
 
@@ -32,7 +32,7 @@ const App = () => {
 
         // チェックされた時の処理
         if(!btnState[prefId]){
-            ConnectApi(url)
+            await ConnectApi(url)
             .then(data => {
 
                 // チェックされた都道府県の人口データを格納する配列
