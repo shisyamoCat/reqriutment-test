@@ -8,6 +8,12 @@ const App = () => {
     const [years, setYears] = useState([]);                 // 年度を格納する配列
     const [series, setSeries] = useState([]);               // 都道府県のチェック状態を格納する配列
 
+    // RESAS-API 都道府県一覧URL
+    const url_pref = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
+    // RESAS-API 都道府県別総人口一覧URL
+    const url_pop = "https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=0";
+
+
 
     // APIから取ってきたデータをJSONで吐き出す関数
     const ConnectApi = (url) => {
@@ -38,17 +44,12 @@ const App = () => {
                 // チェックされた都道府県の人口データを格納する配列
                 let prefPopulation = [];
 
-                // チェックされた都道府県の年度データを格納する配列
-                let prefYear = [];
-
                 // jsonのチェックされた都道府県の総人口配列
                 const obj = data.result.data[0];
 
-                // 総人口配列から人口データと年度データを抜き出して
-                // 各配列へ追加
+                // 総人口配列から人口データ抜き出して配列へ追加
                 Object.keys(obj.data).forEach(elm => {
                     prefPopulation.push(obj.data[elm].value)
-                    prefYear.push(obj.data[elm].year)
                 });
 
                 // チェックされた都道府県名と人口データ配列をprefDataに格納
@@ -62,9 +63,6 @@ const App = () => {
 
                 // 更新したチェック県名をseriesにセット
                 setSeries(series)
-
-                // 更新した年度配列をyearsにセット
-                setYears(prefYear)
             })
             .catch((error) => {
                 return;
@@ -75,8 +73,7 @@ const App = () => {
             // 現在のチェック状況をコピー
             const _series = series.slice();
 
-            // チェックが外された都道府県と同じ都道府県を
-            // 配列から消去
+            // チェックが外された都道府県と同じ都道府県を配列から消去
             for(let i in _series){
                 if(pref[prefId].prefName === _series[i].name){
                     _series.splice(i,1)
@@ -92,19 +89,36 @@ const App = () => {
     };
 
 
-    // レンダリング時に都道府県一覧を取得
+    // 初回レンダリング時に都道府県一覧を取得
     useEffect(() => {
-        // RESAS-API 都道府県一覧URL
-        const url = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
-        // API-KEYを設定
-
-        ConnectApi(url)
+        ConnectApi(url_pref)
         .then(data => {
             setPref(data.result)
         })
         .catch((error) =>{
             return;
         });
+
+        ConnectApi(url_pop)
+        .then(data => {
+
+                // チェックされた都道府県の年度データを格納する配列
+                let prefYear = [];
+
+                // jsonのチェックされた都道府県の総人口配列
+                const obj = data.result.data[0];
+
+                // 総人口配列から年度データを抜き出して配列へ追加
+                Object.keys(obj.data).forEach(elm => {
+                    prefYear.push(obj.data[elm].year)
+                });
+
+                // 更新した年度配列をyearsにセット
+                setYears(prefYear)
+            })
+            .catch((error) => {
+                return;
+            });
     }, []);
 
 
