@@ -42,7 +42,7 @@ const App = () => {
             .then(data => {
 
                 // チェックされた都道府県の人口データを格納する配列
-                let prefPopulation = [];
+                const prefPopulation = [];
 
                 // jsonのチェックされた都道府県の総人口配列
                 const obj = data.result.data[0];
@@ -89,7 +89,7 @@ const App = () => {
     };
 
 
-    // 初回レンダリング時に都道府県一覧を取得
+    // 初回レンダリング時に都道府県一覧と年度データを取得
     useEffect(() => {
         ConnectApi(url_pref)
         .then(data => {
@@ -103,7 +103,7 @@ const App = () => {
         .then(data => {
 
                 // チェックされた都道府県の年度データを格納する配列
-                let prefYear = [];
+                const prefYear = [];
 
                 // jsonのチェックされた都道府県の総人口配列
                 const obj = data.result.data[0];
