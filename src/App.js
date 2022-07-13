@@ -31,7 +31,7 @@ const App = () => {
         const url = `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=${prefId + 1}`;
 
         // チャックボタンの状態をコピー
-        const _btnState =  btnState.slice();
+        const _btnState = btnState.slice();
 
         // チャックされた都道府県の配列の真偽値を反転
         _btnState[prefId] = !_btnState[prefId];
@@ -91,14 +91,16 @@ const App = () => {
 
     // 初回レンダリング時に都道府県一覧と年度データを取得
     useEffect(() => {
+        // 都道府県名データ
         ConnectApi(url_pref)
         .then(data => {
             setPref(data.result)
         })
-        .catch((error) =>{
+        .catch((error) => {
             return;
         });
 
+        // 年度データ
         ConnectApi(url_pop)
         .then(data => {
 
@@ -126,10 +128,10 @@ const App = () => {
         <div className="wrapper">
             <Header/>
             <Main
-                pref={pref}
-                series={series}
-                years={years}
-                onClick={changeButtonState}
+                pref={pref}                     // 都道府県名引き渡し
+                series={series}                 // 都道府県名と人口データ引き渡し
+                years={years}                   // 年度データ引き渡し
+                onClick={changeButtonState}     // changeButtonState関数引き渡し
             />
         </div>
     );
